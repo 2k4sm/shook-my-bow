@@ -35,33 +35,38 @@ const Bookings = () => {
 
     return(
         <>
-            {bookings && <Row gutter={24}>
-                { bookings.map(booking => {
-                    return <Col key={booking._id} xs={{span: 24}} lg={{span: 12}}>
-                    <Card className="mb-3">
-                        <div className="d-flex flex-column-mob">                
-                            <div className="flex-shrink-0"><img src={booking.show.movie.poster} width={100} alt="Movie Poster"/></div>
-                            <div className="show-details flex-1">
-                                <h3 className="mt-0 mb-0">{booking.show.movie.title}</h3>
-                                <p>Theatre: <b>{booking.show.theatre.name}</b></p>
-                                <p>Seats: <b>{booking.seats.join(", ")}</b></p>
-                                <p>Date & Time: <b>{moment(booking.show.date).format("MMM Do YYYY")} {moment(booking.show.time, "HH:mm").format("hh:mm A")}</b>  </p>
-                                <p>Amount: <b>Rs.{booking.seats.length * booking.show.ticketPrice} </b></p>
-                                <p>Booking ID: <b>{booking.transactionId} </b></p>
+            {bookings.length > 0 ? (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {bookings.map(booking => (
+                        <div key={booking._id} className="mb-3">
+                            <div className="border p-4 rounded shadow">
+                                <div className="flex flex-col lg:flex-row items-start lg:items-center">
+                                    <div className="flex-shrink-0 mb-4 lg:mb-0">
+                                        <img src={booking.show.movie.poster} className="w-24" alt="Movie Poster"/>
+                                    </div>
+                                    <div className="flex-1 lg:ml-4">
+                                        <h3 className="text-xl font-bold mb-2">{booking.show.movie.title}</h3>
+                                        <p className="mb-1">Theatre: <b>{booking.show.theatre.name}</b></p>
+                                        <p className="mb-1">Seats: <b>{booking.seats.join(", ")}</b></p>
+                                        <p className="mb-1">Date & Time: <b>{moment(booking.show.date).format("MMM Do YYYY")} {moment(booking.show.time, "HH:mm").format("hh:mm A")}</b></p>
+                                        <p className="mb-1">Amount: <b>Rs.{booking.seats.length * booking.show.ticketPrice}</b></p>
+                                        <p className="mb-1">Booking ID: <b>{booking.transactionId}</b></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </Card>                
-                </Col>
-                }) }    
-                
-            </Row>}
-
-           {!bookings.length && <div className="text-center pt-3">
-                    <h1>You've not booked any show yet!</h1>
-                    <Link to="/"><Button type="primary">Start Booking</Button></Link>
-                </div>}
-            
+                    ))}
+                </div>
+            ) : (
+                <div className="text-center pt-3">
+                    <h1 className="text-2xl mb-4">You've not booked any show yet!</h1>
+                    <Link to="/">
+                        <Button type="primary">Start Booking</Button>
+                    </Link>
+                </div>
+            )}
         </>
-    )
-}
+    );
+};
+
 export default Bookings;

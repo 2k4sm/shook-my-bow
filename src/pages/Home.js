@@ -37,27 +37,22 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getData();
     if (user.role === "admin") {
       navigate("/admin");
     } else if (user.role === "partner") {
       navigate("/partner");
     }
+    getData();
   }, []);
 
   return (
     <>
-      <Row className="justify-content-center w-100">
-        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-          <Input
+      <Row className="w-full pb-5 h-full">
+        <Input
             placeholder="Type here to search for movies"
             onChange={handleSearch}
             prefix={<SearchOutlined />}
           />
-          <br />
-          <br />
-          <br />
-        </Col>
       </Row>
       <Row
         className="justify-content-center"
@@ -93,10 +88,9 @@ const Home = () => {
                         )}`
                       );
                     }}
-                    className="cursor-pointer"
+                    className="cursor-pointer h-80 w-52"
                     src={movie.poster}
                     alt="Movie Poster"
-                    width={200}
                     style={{ borderRadius: "8px" }}
                   />
                   <h3
