@@ -6,14 +6,17 @@ import { hideLoading, showLoading } from "../redux/loaderSlice";
 import { GetCurrentUser } from "../calls/users";
 import { setUser } from "../redux/userSlice";
 import { HomeOutlined, UserOutlined, LogoutOutlined, UserAddOutlined } from "@ant-design/icons";
-
+import { clearUser } from "../redux/userSlice";
 const { Header } = Layout;
 
 function ProtectedRoute({ children }) {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(clearUser());
+  };
   const navItems = [
     {
       key: "home",
@@ -54,13 +57,11 @@ function ProtectedRoute({ children }) {
           label: (
             <Link
               to="/login"
-              onClick={() => {
-                localStorage.removeItem("token");
-              }}
+              onClick={handleLogout}
               className="hover:text-blue-500"
             >
-              Log Out
-            </Link>
+            Log Out
+             </Link>
           ),
           icon: <LogoutOutlined />,
         },

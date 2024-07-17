@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { hideLoading, showLoading } from "../redux/loaderSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllMovies } from "../calls/movies";
 import { message, Row, Col, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { useSelector } from "react-redux";
+
 const Home = () => {
   const [movies, setMovies] = useState(null);
   const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
-  
-  
+
   const getData = async () => {
     try {
       dispatch(showLoading());
@@ -33,26 +32,30 @@ const Home = () => {
 
   const handleSearch = (e) => {
     setSearchText(e.target.value);
-    console.log(searchText);
   };
 
   useEffect(() => {
-    if (user.role === "admin") {
-      navigate("/admin");
-    } else if (user.role === "partner") {
-      navigate("/partner");
-    }
     getData();
   }, []);
+
+  useEffect(() => {
+    if (user && user.role) {
+      if (user.role === "admin") {
+        navigate("/admin");
+      } else if (user.role === "partner") {
+        navigate("/partner");
+      }
+    }
+  }, [user, navigate]);
 
   return (
     <>
       <Row className="w-full pb-5 h-full">
         <Input
-            placeholder="Type here to search for movies"
-            onChange={handleSearch}
-            prefix={<SearchOutlined />}
-          />
+          placeholder="Type here to search for movies"
+          onChange={handleSearch}
+          prefix={<SearchOutlined />}
+        />
       </Row>
       <Row
         className="justify-content-center"
