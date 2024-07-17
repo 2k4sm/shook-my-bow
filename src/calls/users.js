@@ -1,42 +1,41 @@
-const {axiosInstance} = require('./index')
+const { axiosInstance } = require('./index');
 
-//Register new User
-
+// Register new User
 export const RegisterUser = async (value) => {
-    try{
+    try {
         const response = await axiosInstance.post("api/users/register", value);
         return response.data;
-    }catch(error){
-        console.log(error);
-    }
-}
-
-
-// login user
-
-export const LoginUser = async (value) =>{
-    try {
-        const response = await axiosInstance.post("api/users/login", value);
-        return response.data
     } catch (error) {
         console.log(error);
     }
-}
+};
 
-// get current user from the frontend
+// Login user
+export const LoginUser = async (value) => {
+    try {
+        const response = await axiosInstance.post("api/users/login", value);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
-export const GetCurrentUser = async () =>{
-       try {
-           const response = await axiosInstance.get('api/users/get-current-user')
-           return response.data
-       } catch (error) {
-          console.log(error)
-       }
-}
+// Get current user from the frontend
+export const GetCurrentUser = async () => {
+    try {
+        const token = getToken(); // Add token retrieval
+        const response = await axiosInstance.get('api/users/get-current-user', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
-
-/// Forget and Reset Password
-
+// Forget and Reset Password
 export const ForgetPassword = async (value) => {
     try {
         const response = await axiosInstance.patch("api/users/forgetpassword", value);
@@ -44,7 +43,7 @@ export const ForgetPassword = async (value) => {
     } catch (error) {
         console.log(error);
     }
-}
+};
 
 export const ResetPassword = async (value) => {
     try {
@@ -53,16 +52,9 @@ export const ResetPassword = async (value) => {
     } catch (error) {
         console.log(error);
     }
-}
+};
 
-
-
-
-
-
-
-
-
-
-
-
+// Helper function to get token
+const getToken = () => {
+    return localStorage.getItem('token');
+};
