@@ -1,5 +1,9 @@
 import { axiosInstance } from ".";
 
+const getToken = () => {
+    return localStorage.getItem('token');
+};
+
 export const makePayment = async (token, amount) => {
     try{
         const response = await axiosInstance.post('/api/bookings/make-payment', {token, amount});
@@ -21,10 +25,15 @@ export const bookShow = async (payload) => {
 }
 
 export const getAllBookings = async () => {
-    try{
-        const response = await axiosInstance.get('/api/bookings/get-all-bookings');
+    try {
+        const token = getToken();
+        const response = await axiosInstance.get('/api/bookings/get-all-bookings', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
         return response.data;
-    }catch(err){
+    } catch (err) {
         return err.response;
     }
-}
+};
