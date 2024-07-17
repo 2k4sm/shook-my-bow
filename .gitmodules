@@ -1,0 +1,3 @@
+[submodule "shook-my-bow-backend"]
+	path = shook-my-bow-backend
+	url = git@github.com:2k4sm/shook-my-bow-backend.git
