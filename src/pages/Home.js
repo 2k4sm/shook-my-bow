@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { hideLoading, showLoading } from "../redux/loaderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllMovies } from "../calls/movies";
-import { message, Row, Col, Input } from "antd";
+import { message, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
@@ -50,68 +50,49 @@ const Home = () => {
 
   return (
     <>
-      <Row className="w-full pb-5 h-full">
+      <div className="w-full pb-5 h-full">
         <Input
           placeholder="Type here to search for movies"
           onChange={handleSearch}
           prefix={<SearchOutlined />}
+          className="w-full p-2 mb-4"
         />
-      </Row>
-      <Row
-        className="justify-content-center"
-        gutter={{
-          xs: 8,
-          sm: 16,
-          md: 24,
-          lg: 32,
-        }}
-      >
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
         {movies &&
           movies
             .filter((movie) =>
               movie.title.toLowerCase().includes(searchText.toLowerCase())
             )
             .map((movie) => (
-              <Col
-                className="gutter-row mb-5"
-                key={movie._id}
-                span={{
-                  xs: 24,
-                  sm: 24,
-                  md: 12,
-                  lg: 10,
-                }}
-              >
-                <div className="text-center">
-                  <img
-                    onClick={() => {
-                      navigate(
-                        `/movie/${movie._id}?date=${moment().format(
-                          "YYYY-MM-DD"
-                        )}`
-                      );
-                    }}
-                    className="cursor-pointer h-80 w-52"
-                    src={movie.poster}
-                    alt="Movie Poster"
-                    style={{ borderRadius: "8px" }}
-                  />
-                  <h3
-                    onClick={() => {
-                      navigate(
-                        `/movie/${movie._id}?date=${moment().format(
-                          "YYYY-MM-DD"
-                        )}`
-                      );
-                    }}
-                    className="cursor-pointer"
-                  >
-                    {movie.title}
-                  </h3>
-                </div>
-              </Col>
+              <div key={movie._id} className="text-center border rounded-lg shadow-md w-52">
+                <img
+                  onClick={() => {
+                    navigate(
+                      `/movie/${movie._id}?date=${moment().format(
+                        "YYYY-MM-DD"
+                      )}`
+                    );
+                  }}
+                  className="cursor-pointer h-80 w-full object-cover rounded-md"
+                  src={movie.poster}
+                  alt="Movie Poster"
+                />
+                <h3
+                  onClick={() => {
+                    navigate(
+                      `/movie/${movie._id}?date=${moment().format(
+                        "YYYY-MM-DD"
+                      )}`
+                    );
+                  }}
+                  className="cursor-pointer mt-4 text-lg font-bold"
+                >
+                  {movie.title}
+                </h3>
+              </div>
             ))}
-      </Row>
+      </div>
     </>
   );
 };

@@ -32,7 +32,7 @@ function Login() {
       <header className="App-header">
         <main className="main-area mw-500 text-center px-3">
           <section className="left-section">
-            <h1>Login to BookMyShow</h1>
+            <h1>Login to ShookMyBow</h1>
           </section>
 
           <section className="right-section">
