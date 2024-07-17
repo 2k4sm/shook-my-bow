@@ -1,21 +1,26 @@
 import { Tabs } from 'antd';
 import Bookings from './Bookings';
-
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 const Profile = () => {
-    // const onChange = (key) => {
-    //     console.log(key);
-    //   };
+
+      const navigate = useNavigate();
+      const { user } = useSelector((state) => state.user);
+      useEffect(() => {
+        if (user.role === "partner") {
+          navigate("/partner");
+        } else if (user.role === "admin") {
+          navigate("/admin");
+        }
+      }, []);
+      
       const items = [
         {
           key: '1',
           label: 'Bookings',
           children: <Bookings/>,
         },
-        // {
-        //   key: '3',
-        //   label: 'Tab 3',
-        //   children: 'Content of Tab Pane 3',
-        // },
       ];
 
     return (

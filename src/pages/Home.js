@@ -6,13 +6,15 @@ import { message, Row, Col, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
-
+import { useSelector } from "react-redux";
 const Home = () => {
   const [movies, setMovies] = useState(null);
   const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const { user } = useSelector((state) => state.user);
+  
+  
   const getData = async () => {
     try {
       dispatch(showLoading());
@@ -36,6 +38,11 @@ const Home = () => {
 
   useEffect(() => {
     getData();
+    if (user.role === "admin") {
+      navigate("/admin");
+    } else if (user.role === "partner") {
+      navigate("/partner");
+    }
   }, []);
 
   return (

@@ -87,7 +87,7 @@ function Register() {
                 </Button>
               </Form.Item>
               <Form.Item
-                label="Register as a Partner"
+                label="Register as:"
                 htmlFor="role"
                 name="role"
                 className="d-block text-center"
@@ -99,8 +99,9 @@ function Register() {
                     name="radiogroup"
                     className="flex-start"
                   >
-                    <Radio value={'partner'}>Yes</Radio>
-                    <Radio value={'user'}>No</Radio>
+                    <Radio value={'user'}>User</Radio>
+                    <Radio value={'partner'}>Partner</Radio>
+                    <Radio value={'admin'}>Admin</Radio>
                   </Radio.Group>
                 </div>
               </Form.Item>
